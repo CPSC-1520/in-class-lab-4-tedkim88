@@ -1,6 +1,64 @@
 
 // Enter your code below.
 
+let form = document.querySelector('#new-order-form');
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  let itemName = event.target.elements['order-item-name'].value;
+  let price = event.target.elements['order-item-price'].value;
+  let size = event.target.elements['order-size'].value;
+
+  let isFormValid = true;
+
+
+  if (isValueNotEmpty(itemName)) {
+    event.target.elements['order-item-name'].classList.remove('is-invalid');
+  }
+  else {
+    event.target.elements['order-item-name'].classList.add('is-invalid')
+    isFormValid = false;
+  }
+
+
+  if (isValueNotEmpty(price) && isGreaterThanFive(price)) {
+    event.target.elements['order-item-price'].classList.remove('is-invalid');
+  }
+  else {
+    event.target.elements['order-item-price'].classList.add('is-invalid');
+    isFormValid = false;
+  }
+
+  if (isValueNotEmpty(size)) {
+    event.target.elements['order-size'].classList.remove('is-invalid');
+  }
+  else {
+    event.target.elements['order-size'].classList.add('is-invalid');
+    isFormValid = false;
+  }
+
+
+  if (isFormValid) {
+    addOrderItem(itemName, price, size);
+    event.target.reset();
+  }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // functions needed for assessment (do not change.)
 
@@ -12,7 +70,7 @@
  */
 const isValueNotEmpty = (value) => {
   if (value !== "") {
-      return true
+    return true
   }
   return false
 }
@@ -25,7 +83,7 @@ const isValueNotEmpty = (value) => {
  */
 const isGreaterThanFive = (value) => {
   if (value > 5) {
-      return true
+    return true
   }
   return false
 }
@@ -45,7 +103,10 @@ const addOrderItem = (orderItemName, orderItemPrice, orderSize) => {
       <h5 class="mb-1">${orderItemName}</h5>
       <small>${orderSize}</small>
     </div>
-    <p class="mb-1">${'$'+orderItemPrice}</p>
+    <p class="mb-1">${'$' + orderItemPrice}</p>
   </li>`
   orderItemList.innerHTML += newOrderItem
 }
+
+
+
